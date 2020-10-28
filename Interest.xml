@@ -8,18 +8,18 @@
 
 <chapter xml:id="Interest" xmlns:xi="http://www.w3.org/2001/XInclude"><title>Interest</title>
 
-			
-
-
 <section xml:id="SimpleInterest"><title>Simple Interest</title>
 
 <p>
 To determine the amount of interest one should pay for the use of someone else's money, one model is to base the amount of interest according to two conditions:
 <ul>
-<li>interest should be directly proportional to the length of time over which the money is lent</li>
-<li>interest should be directly proportional to some rate which is based upon the borrower's perceived ability to repay and based upon current market conditions.</li>
+	<li>interest should be directly proportional to the length of time over which the money is lent</li>
+	<li>interest should be directly proportional to some rate which is based upon the borrower's perceived ability to repay and based upon current market conditions.</li>
 </ul>
 Often, when dealing with monetary value over time one can more easily illustrate the setting using a time line
+</p>
+
+<p>
 <me>
 \begin{matrix}
  \text{Money Amounts} &amp; P &amp;  \rightarrow &amp; A \\ 
@@ -29,47 +29,108 @@ Often, when dealing with monetary value over time one can more easily illustrate
 </me>
 </p>
 
-<p>				
-To satisfy these constraints leads to the model for Simple Interest. 
+<definition xml:id="DefnSimpleInterest"><title>Simple Interest</title>
+<statement>
+<p>
+Simple interest is a cost of funds directly proportional to the principal P, to a constant rate <m>i</m>, and to the length of the loan <m>t</m>.
 </p>
+</statement>
+</definition>
+
+
+<theorem xml:id="SimpleInterestFormula"><title>Simple Interest Formula</title>
+<statement>
+<p>
+	Using the definition of <xref ref="DefnSimpleInterest">simple interest</xref> and the idea of direct proportionality between interest earned <m>I</m> and <m>P</m>, <m>i</m>, and <m>t</m> (respectively) yields
+	<me>I = P \cdot i \cdot t</me> 
+	and so 
+	<me>A = P + P \cdot i \cdot t</me> 
+	or 
+	<me>A = P(1 + i \cdot t)</me>
+</p>
+</statement>
+</theorem>
+
+	
+<corollary><title>Linear Growth</title>
+<statement>
+<p>
+Under <xref ref="DefnSimpleInterest">simple interest</xref>, the future value <m>A</m> of an investment grows linearly with respect to increasing time.
+</p>
+</statement>
+</corollary>
+
+<exercise><title>WeBWorK - Simple Interest Future Value</title>
+	<webwork source="Library/Mizzou/Finite_Math/Simple_Interest/Compute_Amount_1.pg" />
+</exercise>
 
 <p>
-<theorem xml:id="SimpleInterestFormula"><title>Simple Interest Formula</title>
-<statement>Using simple interest, <m>I = P \cdot i \cdot t</m> and so <m>A = P + P \cdot i \cdot t</m> or <m>A = P(1 + i \cdot t)</m></statement>
-</theorem>
+Note that if you have <m>A</m> but not <m>P</m> then simple algebra allows you to plug in what you know and solve for what you need.
 </p>
-	
-<exercise><title>WeBWorK Interactive Exercise</title>
-	<webwork source="Library/Rochester/setAlgebra01RealNumbers/lhp1_31-34_mo.pg" />
+
+<exercise><title>WeBWorK - Simple Interest Present Value</title>
+	<webwork source="Library/Mizzou/Algebra/linear_functions_apps/simple_interest_borrowed_01.pg" />
 </exercise>
 	
+<p>
+Algebraic solving can be for any of the variables in the formula so long as you know the other three.
+</p>
+	
+<exercise><title>WeBWorK - Simple Interest Solve for rate</title>
+	<webwork source="Library/Mizzou/Finite_Math/Simple_Interest/Compute_Interest_4.pg" />
+</exercise>
+
 </section>
+		
+		
+		
 			
 <section xml:id="CompoundInterest"><title>Regular Compound Interest</title>
 
 <p>
-When using simple interest, one only considers the value of the resource at the beginning of time and then again at the end. H
-owever, the lender does without use of the funds at all times during the period of the investment. Indeed, if the original investment
+When using simple interest, one only considers the value of the resource at the beginning of time and then again at the end. 
+However, the lender does without use of the funds at all times during the period of the investment.
+</p>
+
+<p> 
+Indeed, if the original investment
 were to only be lent for 1/2 of the original time period, then the borrower would have to pay the accrued interest at that time (1/2 as much
 as planned) and then perhaps re-borrow the money plus the paid interest for the remaining time. However, for the second half, the amount borrowed
 would include the additional interest that had to be paid.  Continuing this by shortening the period (say, 1/4's or 1/12's) would allow
-for the amount borrowed at the end of each period to grow. The net effect of this recalculation over many periods gives rise to what is 
-know as Compound Interest.</p>
+for the amount borrowed at the end of each period to grow. The net effect of this recalculation over many periods causes the interest upon interest to grow at a rate that is more than what might be expected using simple interest.
+</p>
 
-<theorem xml:id="CompoundInterestV"><title>Future Value of Compound Interest</title>
+<definition xml:id="DefnCompoundInterest"><title>Compound Interest</title>
 <statement>
-	<p>Using Compound interest over t years, compounding m times per year, yields 
-	<m>\displaystyle A = P(1+r)^n</m> with <m>n=mt</m> and <m>r = i/m</m></p>
+<p>
+When simple interest is allowed to accure for a short period of time and then recursively reconsidered as part of a slightly increased principle for all subsequent time periods, the resulting increase in value is known as compound interest.
+</p>
+</statement>
+</definition>
+
+<theorem xml:id="CompoundInterestFormula"><title>Future Value of Compound Interest</title>
+<statement>
+<p>
+Using Compound interest over t years, compounding m times per year, yields 
+	<me> A = P(1+\frac{i}{m})^{mt}.</me>
+
+</p>
 </statement>
 <proof>
-	<p>To determine the future value of a deposit of size <m>P</m> over several 
+<p>
+To determine the future value of a deposit of size <m>P</m> over several 
 	periods, utilize the <xref ref="SimpleInterestFormula">simple interest formula</xref> for a single
 	period to determine the value of the deposit after that one period. Then, 
 	take that new (slightly larger) amount as a starting point
 	for a new simple interest calculation covering the next period. Repeat 
 	for n periods to get the ending value over all periods.</p>
 	<p>To do this, let's denote the present value after k periods as 
-	<m>P_k</m> and note that <m>P_0 = P</m>.</p>
+	<m>P_k</m> and note that <m>P_0 = P</m>.
+</p>
+<p>
+To simplify notation here, consider using <m>n=mt</m> and <m>r = i/m</m>. Then looking at the timeline of money
+</p>
+<p>
 	<me>
 	\begin{matrix}
 	\text{Money Amounts} &amp; P_0 &amp; P_1 &amp; P_2 &amp; \ldots &amp; P_n \\ 
@@ -77,8 +138,8 @@ know as Compound Interest.</p>
 	\text{Time} &amp;  0  &amp; \frac{t}{n} &amp; \frac{2t}{n} &amp; \ldots &amp; t \\ 
 	\end{matrix}					
 	</me>
-	
-	<p>Then, using simple interest over each single time period</p>
+</p>	
+<p>Using simple interest over each single time period
 	<md>
 		<mrow>P_1 &amp; = P_0(1+r)</mrow>
 		<mrow>P_2 &amp; = P_1(1+r) = P_0(1+r)^2 </mrow>
@@ -88,41 +149,112 @@ know as Compound Interest.</p>
 		<mrow>P_{n-1} &amp; = P_{n-2}(1+r) = P_0(1+r)^{n-1}</mrow>
 		<mrow>P_n &amp; = P_{n-1}(1+r) = P_0(1+r)^n</mrow>
 	</md>
-	
-	<p>Noting that <m>A = P_n </m> and <m>P = P_0 </m> gives</p>
+</p>
+<p>
+Noting that <m>A = P_n </m> and <m>P = P_0 </m> gives
+</p>
+<p>
 	<md>
 		<mrow>A &amp; = P(1+r)^n</mrow>
 	</md>
+</p>
 </proof>
 </theorem>
+
+<corollary><title>Compound Interest gives Exponential Growth</title>
+<statement>
+<p>
+Note that <m>1+\frac{i}{m} &gt; 1</m>.  So, raising a number larger than one to an increasing power is by definition exponential growth.
+</p>
+<p>
+It should also be noted that
+
+<me>P(1+\frac{i}{m})^n = P e^{n \cdot ln(1+\frac{i}{m})}</me>
+
+which is a growing natural exponential since <m>ln(1+\frac{i}{m})</m> is positive because <m>\frac{i}{m} &gt; 0.</m>.
+</p>
+</statement>
+</corollary>
 				
 <corollary><title>Present Value of Compound Interest</title>
-<statement>Given a future value <m>A</m>, the present value using Compound Interest is given by <m>\displaystyle P = A(1+r)^{-n}</m></statement>
-<proof><p>Take the formula above and solve for P. This gives,</p>
-	<p><m>\displaystyle P = A(1+r)^{-n}</m></p>
+<statement>
+<p>
+Given a future value <m>A</m>, the present value using compound interest is given by 
+<me>P = A(1+\frac{i}{m})^{-n}</me>
+</p>
+</statement>
+<proof>
+<p>
+Take the <xref ref="CompoundInterestFormula">Compound Interest formula</xref> and solve for P. This gives
+	<me>P = A(1+\frac{i}{m})^{-n}</me>
+</p>
 </proof>
 </corollary>
 				
 
-<definition xml:id="EffectiveInterestRate"><title>Effective Interest Rates</title>
-	<p>
-	The published yearly interest rate is also called the "nominal" rate.
-	As one considers investments (and especially annuities) one may desire compounding the value of money over different compounding time 
-	frames. So, comparing raw interest rates becomes muddled since the same nominal rate can result in wildly different actual growth amounts.
-	To avoid confusion we determine what is known as an effective interest rate
-	by computing the increase of <m>\$ 1</m> over one year's time span. This results in the effective rate <m>r_e</m>
-	<md>
-		<mrow>P + I = 1 + 1 \cdot r_e \cdot 1 = 1(1+r)^m</mrow>
-		<mrow>r_e = (1+r)^m - 1</mrow>
-	</md>
-	</p>
+<definition xml:id="DefnNominalInterestRate"><title>Nominal Interest Rates</title>
+<statement>
+<p>
+	The published yearly interest rate <m>i</m> is also known as the "nominal" rate.
+</p>
+</statement>
 </definition>
 
+<p>
+As one considers investments (and especially annuities) one may desire compounding the value of money over different compounding time frames. 
+So, comparing <xref ref="DefnNominalInterestRate">raw interest rates</xref> becomes muddled since the same nominal rate can result in wildly different actual growth amounts.  To be able to compare two different investments "apples-to-apples" you need a standard rate that takes into account the various factors involved in dealing with compound interest.
+</p>
+
+<definition xml:id="DefnEffectiveInterestRate"><title>Effective Interest Rates</title>
+<statement>
+<p>
+The effective interest rate for any investment is determined by computing the <xref ref="DefnSimpleInterest">simple interest</xref> rate needed in order for an investment <m>P</m> to grow to a future value of <m>A</m> over a one year time frame.
+</p>
+</statement>
+</definition>
+
+
+<theorem><title>Computing Effective Interest Rate</title>
+<statement>
+<p>
+Given a nominal interest rate <m>i</m> compounded <m>m</m> times in a year, the effective interest rate <m>i_e</m> is given by
+	<me>i_e = (1+\frac{i}{m})^m - 1</me>
+</p>
+</statement>
+<proof>
+<p>
+Consider computing the increase compounded over one year's time span with <m>n = m</m> compounding periods per year.  
+Equate the net proceeds using the <xref ref="CompoundInterestFormula">compound interest</xref> formula with rate <m>r</m> and set it equal to the <xref ref="SimpleInterestFormula">formula for simple interest</xref> with the effective rate <m>i_e</m>.
+
+	<me>P(1 + i_e \cdot t) = P(1+i/m)^m</me>
+
+Cancelling the common term
+
+	<me>1 + i_e \cdot 1 = (1+i/m)^m</me>
+
+and easily solving for <m>i_e</m>gives the effective rate
+
+	<me>i_e = (1+i/m)^m - 1</me>
+</p>
+</proof>
+</theorem>
+
 <example><title>Comparing different compounding periods</title>
-	<p>Determine the effective rate of compounding daily that is equivalent to compounding monthly at an annual rate of <m>r_{12}=4%</m>.  
+<p>
+Determine the effective rate of compounding daily that is equivalent to compounding monthly at an annual rate of <m>i_{\text{monthly}} = 4 \%.</m>  
+</p>
+<p>	
 	To do so, first compute the effective interest rate of the monthly compounding (since you know its stated rate) using 
-	<m> \displaystyle (1+ \frac{0.04}{12})^{12} - 1</m>.  Then, use the effective rate
-	formula set equal to this effective value and work your way backward to find the annual rate <m>r_{365}</m>for compounding daily.</p>
+	
+	<me>(1+ \frac{0.04}{12})^{12} - 1.</me>  
+	
+	This is the nominal rate needed to equal the compounded rate of <m>4 \%</m> monthly.  On the other hand, when compounding daily, you would get an effective rate of 
+	
+	<me>(1+ \frac{r_{365}}{365})^{12} - 1,</me>  
+
+where <m>r_{365}</m> is the effective rate when compounding daily.  Setting these equal and working your way backward allows you to solve for the annual rate <m>r_{365}</m> associated with compounding daily.
+</p>
+<p>Using this approach,
 	<md>
 		<mrow>(1+ \frac{0.04}{12})^{12} - 1 &amp; = (1+ \frac{r_{365}}{365})^{365} - 1 </mrow>
 		<mrow>(1+ \frac{0.04}{12})^{12} &amp; = (1+ \frac{r_{365}}{365})^{365} </mrow>
@@ -132,8 +264,23 @@ know as Compound Interest.</p>
 		<mrow>e^{\frac{12}{365} \ln(1+ \frac{0.04}{12})} &amp; = 1+ \frac{r_{365}}{365} </mrow>
 		<mrow>365(e^{\frac{12}{365} \ln(1+ \frac{0.04}{12})} - 1) &amp; = r_{365} </mrow>
 	</md>
+</p>
 	
-	<p>and the rest is arithmetic.  Easily, the above example generalizes to other compounding periods:</p>
+<p>
+and the rest is arithmetic.
+</p>
+</example>
+
+<theorem><title>Comparing Effective Rates for Different Compounding Rates</title>
+<statement>
+<p>
+If one compounding scheme utilizes nominal rate of <m>r_1</m> compounded <m>m_1</m> times per year and another compounds <m>m_2</m> times per year, then the nominal rate needed for the second scheme would require a nominal rate <m>r_2</m> given by
+<me>m_2(e^{\frac{m_1}{m_2} \ln(1+ \frac{r_1}{m_1})} - 1) = r_2 </me>
+</p>
+</statement>
+<proof>
+<p>
+Using similar algebra to the example above
 	<md>
 		<mrow>(1+ \frac{r_1}{m_1})^{m_1} - 1 &amp; = (1+ \frac{r_2}{m_2})^{m_2} - 1 </mrow>
 		<mrow>(1+ \frac{r_1}{m_1})^{m_1} &amp; = (1+ \frac{r_2}{m_2})^{m_2} </mrow>
@@ -143,20 +290,30 @@ know as Compound Interest.</p>
 		<mrow>e^{\frac{m_1}{m_2} \ln(1+ \frac{r_1}{m_1})} &amp; = 1+ \frac{r_2}{m_2} </mrow>
 		<mrow>m_2(e^{\frac{m_1}{m_2} \ln(1+ \frac{r_1}{m_1})} - 1) &amp; = r_2 </mrow>
 	</md>
-</example>
+</p>
+</proof>
+</theorem>
+
 
 </section>
 
 
 <section xml:id="ContinuousCompounting"><title>Continuous Compounding of Interest</title>
 
-<p>As interest is compounded more often, the effective interest rate tends to increase. Indeed, as m increases then the time between
+<p>
+As interest is compounded more often, the effective interest rate tends to increase. Indeed, as m increases then the time between
 periods decreases and becomes infinitesimal.  We would then say that interest is compounded continuously. As it turns out, we will 
-see that there is a limit to the effective rate as m grows.</p>
+see that there is a limit to the effective rate as m grows.
+</p>
 					
 <theorem xml:id="ContinuousCompoundingFV"><title>Future Value when Compounding Continuously</title>
-<statement><m>\displaystyle A = P e^{it}</m></statement>
+<statement>
+<p>
+<me>\displaystyle A = P e^{it}</me>
+</p>
+</statement>
 <proof>
+<p>
 	<md>
 		<mrow>A &amp; = P \lim_{m \rightarrow \infty} (1+i/m)^{m t}</mrow>
 		<mrow>  &amp; = P \lim_{m \rightarrow \infty} \left ( (1+i/m)^m \right )^t</mrow>
@@ -168,6 +325,7 @@ see that there is a limit to the effective rate as m grows.</p>
 		<mrow>  &amp; = P \left ( e^{ \frac{i}{1+0}} \right )^t</mrow>
 		<mrow>  &amp; = P e^{i \cdot t}</mrow>
 	</md>
+</p>
 </proof>
 </theorem>
 					

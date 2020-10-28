@@ -18,42 +18,46 @@ Sometimes what is borrowed by another person is itself money. When you lend some
 </p>
 
 <p>
-            As we all know, money can be used for a number of purposes. For this set of notes, we will be concerned with the use
-            of money as an investment. In general, when one has monetary resources then they can use those resources to purchase supplies,
-            equipment, manpower, etc. in order to generate goods and services for which others will pay. That is, they can use the money to
-            make money.</p>
+As we all know, money can be used for a number of purposes. For this set of notes, we will be concerned with the use
+of money as an investment. In general, when one has monetary resources then they can use those resources to purchase supplies,
+equipment, manpower, etc. in order to generate goods and services for which others will pay. That is, they can use the money to
+make money.</p>
 <p>
 When one utilizes (or borrows) someone else's goods or services then the person borrowed from no longer has the use of what has been lent.  Valuable time to do something else instead might be used to provide some service to the other party. An item owned by one no longer can be used by the original owner and therefore it no longer has value to that person.  So, an exchange of something perceived to have similar value is used to make things even.  Indeed, when one takes a sum of money and allows someone else to use it then they forgo the opportunities described above and therefore incurs a loss of the opportunity to earn revenue on those funds. In order to compensate the person lending the money for
-            that potential loss, an additional sum of money is added to the amount when the funds are eventually repaid. This additional sum is what
-            we call interest. 
-            </p>   
-            <p>Some communities may have a general negative attitude for charging interest on loans. It is certainly acceptable for one to lend
-            money out and not expect or require interest when repaid. Indeed, is is acceptable for one to just give money away to those that they
-            might choose to do so. Actually, when lending money to friends it might be best to just consider the loan a gift and repayment a blessing
-            since many friendships have been destroyed over the lack of repayment or the terms of repayment for borrowed funds.
-            </p>
-            <p>For these notes, we will cover the case for how to properly calculate interest on loans and leave it to the
-            reader regarding whether they want to use these mathematical formulas or not.
-            </p>
+that potential loss, an additional sum of money is added to the amount when the funds are eventually repaid. This additional sum is what
+we call interest. 
+</p>   
+
+<p>Some communities may have a general negative attitude for charging interest on loans. It is certainly acceptable for one to lend
+money out and not expect or require interest when repaid. Indeed, is is acceptable for one to just give money away to those that they
+might choose to do so. Actually, when lending money to friends it might be best to just consider the loan a gift and repayment a blessing
+since many friendships have been destroyed over the lack of repayment or the terms of repayment for borrowed funds.
+</p>
+
+<p>For these notes, we will cover the case for how to properly calculate interest on loans and leave it to the
+reader regarding whether they want to use these mathematical formulas or not.
+</p>
                      
 </section>    
         
+
+
 <section xml:id="Notation"><title>Notation</title>
-	<p>For the purposes of these notes, we will use the following notations:</p>
-	<ul>
-		<li>Original Amount Borrowed = Principle = <m>P</m></li>
-		<li>Future Amount to be Repaid = Future Value = <m>A</m></li>
-		<li>Amount Earned = Interest = <m>I</m></li>
-		<li>Time of investment in years = <m>t</m></li>
-		<li>Interest Rate per year = <m>i</m></li>
-		<li>Interest Rate per compounding period = <m>r</m></li>
-		<li>Number of compounding periods per year = <m>m</m></li>					
-		<li>Total Number of compounding periods = <m>n</m></li>
-		<li>Payout per compounding period = <m>R</m></li>
-		<li>Maturity Value = <m>MV</m></li>
-	</ul>
+<p>For the purposes of these notes, we will use the following notations:</p>
+<ul>
+	<li>Original Amount Borrowed = Principle = <m>P</m></li>
+	<li>Future Amount to be Repaid = Future Value = <m>A</m></li>
+	<li>Amount Earned = Interest = <m>I</m></li>
+	<li>Time of investment in years = <m>t</m></li>
+	<li>Interest Rate per year = <m>i</m></li>
+	<li>Interest Rate per compounding period = <m>r</m></li>
+	<li>Number of compounding periods per year = <m>m</m></li>					
+	<li>Total Number of compounding periods = <m>n</m></li>
+	<li>Payout per compounding period = <m>R</m></li>
+	<li>Maturity Value = <m>MV</m></li>
+</ul>
 	
-	<p>These terms will be described more completely below</p>
+<p>These terms will be described in detail and utilized throughout this text.</p>
 
 </section>	
 </chapter>
