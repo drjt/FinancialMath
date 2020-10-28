@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- <!DOCTYPE webwork SYSTEM "../schema/dtd/webwork.dtd">
+-->
+<!-- Overall element for a Mathbook XML document; mandatory, always-->
+
+
+
+<chapter xml:id="Equations of Value" xmlns:xi="http://www.w3.org/2001/XInclude"><title>Equations of Value</title>
+
+  
+<section xml:id="EOV"><title>Equations of Value</title>
+        <p>There are times that a series of debts owed by an individual might have need to be replaced
+        with another set of debts with perhaps different amounts and at perhaps different times. To 
+        determine how to set this up in an equitable manner requires an "equation of value".  To create
+        an equation of value, draw a time line with debts above and payments below.
+        Choose a date to focus on (often a payment date) and then determine the value of all debts and
+         payments at that time. Finally, set the value of payments = value of debts.</p>
+			<example>
+			  <p>Consider the situation where one owes a debt of <m>\$ 20000</m> in 4 years and 
+			  <m>\$ 30000</m> in 8 years with
+			  money compounded quarterly at a nominal rate of 8%. One 
+			  might desire to combine these two debts into a single payment of size X, say, on the 6th year.
+			  yields the following equation of value: 
+						 <me>X = \$ 20000(1+0.08/4)^8 + \$ 30000(1+0.08/4)^{-8}</me>
+			  and arithmetic easily yields <me>X = \$ 49037.90</me></p>
+			</example>
+			<example>
+			  <p>Consider a situation similar to above but now where one owes the same debts of 
+			  <m>\$ 20000</m> in 4 years and <m>\$ 30000</m> in 8 years with
+			  money compounded quarterly at a nominal rate of 8% but with the desire to convert this to two 
+			  payments each of size X, say, on the 6th year and 7th year. This
+			  yields the following equation of value: 
+						 <me>X + X(1+0.08/4)^{-4} = \$ 20000(1+0.08/4)^8 + \$ 30000(1+0.08/4)^{-8}</me>
+			  and a little but of algebra and arithmetic yields <me>X = \$ 25489.50</me></p>
+			</example>
+			
+<subsection><title>Dollar-Weighted Rate of Return</title>
+				<p>In general, for a sequence of investments starting with an initial investment of <m>V_0</m> at time 0 and
+				subsequent investments (i.e. cash flows) of value <m>C_1, C_2, ... , C_n</m> at times 
+				<m>t_1, t_2, ... , t_n</m> then the future value of these at time t is given by
+				<me>A = V_0(1+r)^t + \sum_{k=1}^n C_k(1+r)^{t-t_k}</me>. One can approximate this
+				equation with an easier one using "linearization" where one replaces  <m>(1+r)^t</m>
+				with it's first-order Taylor approximation <m>1+rt</m>. This gives
+				<me>A = V_0(1+rt) + \sum_{k=1}^n C_k(1+r(t-t_k))</me> which is the future value of the 
+				investments if only simple interest were used. Solving for the interest rate yields the 
+				"dollar weighted rate of return" 
+				<me>r = \frac{A - V_0 - \sum_{k=1}^n C_k}{V_0 t + \sum_{k=1}^n (t-t_k)C_k}</me>.
+				For these, <m>V_0</m> can be thought of as the initial valance in the account and <m>C_k</m> 
+				as deposits made at times <m>t_k</m>
+				</p>
+				<example><title>Dollar Weighted Rate of Return</title>
+					<p>On January 1, 2000, the balance in an account is <m>\$ 25200</m>. On April 1, 2000, <m>\$500</m> 
+					is deposited in this account and on July 1, 2001, a withdrawl of <m>\$ 1000</m> is made.
+					The balance in the account on October 1, 2001 is <m>\$ 25900</m>. Determine the annual rate of 
+					ionterest in this account according to the dollar-weighted method.</p>
+					<p>So, the cashflow has the following:
+					<me>
+						\begin{matrix}
+						 \text{Investment} &amp; 25200 &amp;  500 &amp; -1000 \\ 
+						  \hline \\
+						  \text{Time} &amp;  0  &amp; 3/12 &amp;  18/12 
+						\end{matrix}					
+					</me>
+					with a future value of <m>A = \$ 25900</m>.  Therefore, the annual dollar-weighted
+					rate of interest is
+	<me>r = \frac{25900 - 25200 - 500 + 1000}{25200 (21/12) + 500 (18/12) - 1000 (3/12)} \approx 0.026906</me>.
+					 </p>
+				</example>
+				
+<sage><title>Dollar-weighted computation</title>
+<input>
+pretty_print('Dollar Weighted Annual Rate of Return')
+c=1
+@interact
+def _(n = slider(1,10,1,3,label='Number of Investment Changes')):
+    @interact(layout=dict(top=[['M','FV'],['endtime']]))
+    def __(M=('Investment / Time ', input_grid(2, n, default = [[25200,500,-1000,0,0,0,0,0,0,0,0],[0,3/12,18/12,2,3,4,5,6,7,8]])),
+           FV = input_box(25900,label='Final Value',width=15),
+           endtime = input_box(21/12,label='Final time (yrs)',width=8)):
+        pretty_print(html('State of Investments'))
+        
+        Inv = M[0][0:n]
+        times = M[1][0:n]
+        A = matrix(QQ,[Inv,times])
+        show(A)
+        top = FV - Inv[0]
+        bot = Inv[0]*endtime
+        for k in range(1,n):
+            top = top - Inv[k]
+            bot = bot + Inv[k]*(endtime-times[k])
+ 
+        r = (top/bot).n()
+        pretty_print(html('The Dollar-Weighted Rate of Return = %1.6f'%r))
+       
+        
+</input>
+</sage>
+</subsection>
+
+        	
+<subsection><title>Time-weighted annual rate of return</title>
+				<p>Suppose now that we make investments into a fund over time and know the outstanding
+				balance befoer each deposit or withdrawl occurs.  Notationally, let <m>B_0</m> be the
+				initial balance in the fund and <m>B_k</m> the balance in the fund immediately before
+				time <m>t_k</m> with <m>W_k</m> the amount of each deposit (if negative, then withdrawal).
+				On a time line:
+					<me>
+\begin{matrix}
+	\text{Time} &amp;  0  &amp; t_1 &amp; t_2 &amp; \ldots &amp; t_{n-1} &amp; t_n \\ 
+	\hline \\
+	\text{Balance Before} &amp; 0 &amp; B_1 &amp; B_2 &amp; ... &amp; B_{n-1} &amp; B_n \\
+	\hline \\
+	\text{Deposit/Withdrawal} &amp; 0 &amp; W_1 &amp; W_2 &amp; ... &amp; W_{n-1} &amp; W_n \\ 
+	\hline \\
+	\text{Balance After} &amp; B_0 &amp; B_1 + W_1 &amp; B_2 + W_2 &amp; ... &amp; B_{n-1} + W_{n-1} &amp; B_n + W_n \\ 
+\end{matrix}					
+					</me>
+				</p>
+        		<theorem><title>Time Weighted Annual Rate of Return Formula</title>
+        		<statement>The "time-weighted annual rate of return" r is the solution of
+        		<me>
+        		(1+r)^{t_n} = \frac{B_1}{B_0} \cdot \frac{B_2}{B_1+W_1} \cdot \ldots \cdot \frac{B_n}{B_{n-1}+W_{n-1}}
+        		</me>
+        		</statement>
+        		</theorem>
+        		<proof>
+        			<p>From the beginning of time, the growth over the first time period is given by
+        			<m>B_1 = B_0(1+r_1)^{t_1}</m> or <me>\frac{B_1}{B_0} = (1+r_1)^{t_1}</me>. 
+        			For subsequent time periods, the growth is given by 
+        			<m>B_{k+1} = B_k(1+r_2)^{t_{k+1}-t_k}</m> or <me>\frac{B_{k+1}}{B_k} = (1+r_2)^{t_{k+1}-t_k}</me>.  
+        			Multiplying these together yields
+        			<md>
+						<mrow>\frac{B_1}{B_0} \cdot \frac{B_2}{B_1} ... \cdot \frac{B_n}{B_{n-1}}</mrow>
+						<mrow> &amp; = (1+r_1)^{t_1} \cdot (1+r_2)^{t_2-t_1} ... \cdot (1+r_n)^{t_n-t_{n-1}} </mrow>
+						<mrow> &amp; = (1+r)^{t_n}</mrow>
+        			</md>
+        			noting that <m>r_k = r</m> for all k would allow all of the powers to cancel except for the last.
+        			Define the time-weighted annual rate of return to be the value of r that makes this happen.
+        			</p>
+        		</proof>
+        		<example>
+        			<p>Consider the sequence of investments described in the table below:
+					<me>
+\begin{matrix}
+	\text{Time} &amp; \text{11/1/16} &amp; \text{3/1/17} &amp; \text{8/1/17} &amp; \text{2/1/18} &amp; \text{4/1/18} \\ 
+	\hline \\
+	\text{Balance Before} &amp; \$ 14516 &amp; \$ 14547 &amp; \$ 18351 &amp; \$ 16969 &amp; \$ 18542 \\
+	\hline \\
+	\text{Deposit/Withdrawal} &amp; 0 &amp; \$ 3000 &amp; -\$ 2000 &amp; \$ 2500 &amp; 0 \\ 
+\end{matrix}					
+					</me>
+					Then the time-weighted annual effective yield rate is given by
+					<me>
+        		(1+r)^{17/12} = \frac{14547}{14516} \cdot \frac{18351}{14547+3000} \cdot \frac{16969}{18351-2000} \cdot \frac{18524}{16969+2500} \approx 1.035877
+					</me>      			
+					and by solving yields <m> r \approx 0.025193371</m>
+        			</p>
+        		</example>
+
+<sage>
+<input>
+pretty_print('Time Weighted Annual Rate of Return')
+
+@interact
+def _(n = slider(2,10,1,5,label='Number of Investment Changes')):
+    head = 'Times  BalanceBefore  Dep/Withdraw'
+    @interact
+    def __(M=(head, input_grid(3, n, default = [[0,4/12,9/12,15/12,17/12,4,5,6,7,8,9],[14516,14547,18351,16969,18542,1,1,1,1,1,1],[0,3000,-2000,2500,0,0,0,0,0,0,0]]))):
+        pretty_print('State of Investments')
+        times = M[0][0:n]
+        BalBefore = M[1][0:n]
+        Inv = M[2][0:n]
+        A = matrix(QQ,[times,BalBefore,Inv])
+        show(A)
+        s=1
+        for k in range(n-1):
+            s=s*BalBefore[k+1]/(Inv[k]+BalBefore[k]) 
+
+        r = (e^(ln(s)/times[n-1])-1).n()
+        pretty_print(html('The Dollar-Weighted Rate of Return = %1.6f'%r))  
+ </input>
+</sage>
+        		
+ </subsection>
+ </section>
+        
+        
+        
+        
+ <section xml:id="Equities"><title>Equities</title>
+        	<p>
+        	<ul>
+        		<li>Stock</li>
+        		<li>Forward Price</li>
+        		<li>Annualized Forward Premium</li>
+        		<li>Annualized Continuous Premium</li>
+        		<li>Risk-free rate</li>
+        		<li>Forward Contract</li>
+        		<ul>
+	        		<li>Standard Forward Contract</li>
+    	    		<li>Off-market Forward Contract</li>
+	        		<li>Long Forward Contract</li>
+	        		<li>Prepaid Forward Contract</li>
+	        		<li>Long CaLL Contract</li>
+        		</ul>
+        		<li>Short Sell</li>
+        		<li>Market Maker</li>
+        		<li>Spot Price</li>
+        		<li>Round Trip Transaction Cost</li>
+        		<li>Forward Position</li>
+        		<li>Strike Price</li>
+        		<li></li>
+        		<li></li>
+        	</ul>
+        	</p>
+ </section>
+          
+
+</chapter>
+

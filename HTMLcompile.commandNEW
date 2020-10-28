@@ -1,0 +1,2 @@
+../pretext/pretext -c webwork -s https://webwork-ptx.aimath.org -d webwork-representations  FinancialMathMain.xml
+xsltproc --stringparam publisher FinancialMathPub.xml --xinclude ../xsl/pretext-html.xsl FinancialMathMain.xml

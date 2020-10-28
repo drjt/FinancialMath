@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- <!DOCTYPE webwork SYSTEM "../schema/dtd/webwork.dtd">
+-->
+<!-- Overall element for a Mathbook XML document; mandatory, always-->
+
+<chapter xml:id="Derivatives" xmlns:xi="http://www.w3.org/2001/XInclude"
+><title>Financial Derivatives</title>
+
+      
+        
+        
+ <section xml:id="FinDerivatives"><title>Financial Derivatives</title>
+        	<p>At times one might want to base a contract between two or more parties which is 
+        	based upon the value of some asset. Such an instrument which has a price based upon
+        	these assets is called a derivative.  The value of a derivative varies according to the
+        	value of the underlying asset which may include stocks, bonds, and currencies.</p>
+        	<p>Derivatives were developed historically to account for international trade and the 
+        	likelihood of varying exchange rates. Presently they can often be based upon virtually
+        	anything which can be measured such as market indices or even the weather.</p>
+        	<p>There are several standard derivative forms:
+        	<ul>
+        		<li>Futures Contracts</li>
+        		<li>Forward Contracts</li>
+        		<li>Swaps</li>
+        		<li>Options</li>
+        		<li>Credit-backed Derivatives</li>
+        		<li>Mortgage-backed Security</li>
+        	</ul>
+        	
+        	</p>
+</section>
+        
+
+</chapter>
+
+

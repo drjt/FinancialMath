@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- <!DOCTYPE webwork SYSTEM "../schema/dtd/webwork.dtd">
+-->
+<!-- Overall element for a Mathbook XML document; mandatory, always-->
+
+
+
+<chapter xml:id="Equities" xmlns:xi="http://www.w3.org/2001/XInclude"><title>Equities</title>
+
+        
+ <section xml:id="EquitiesIntroduction"><title>Equities</title>
+        	<p>
+        	<ul>
+        		<li>Stock</li>
+        		<li>Forward Price</li>
+        		<li>Annualized Forward Premium</li>
+        		<li>Annualized Continuous Premium</li>
+        		<li>Risk-free rate</li>
+        		<li>Forward Contract</li>
+        		<ul>
+	        		<li>Standard Forward Contract</li>
+    	    		<li>Off-market Forward Contract</li>
+	        		<li>Long Forward Contract</li>
+	        		<li>Prepaid Forward Contract</li>
+	        		<li>Long CaLL Contract</li>
+        		</ul>
+        		<li>Short Sell</li>
+        		<li>Market Maker</li>
+        		<li>Spot Price</li>
+        		<li>Round Trip Transaction Cost</li>
+        		<li>Forward Position</li>
+        		<li>Strike Price</li>
+        		<li></li>
+        		<li></li>
+        	</ul>
+        	</p>
+ </section>
+          
+
+</chapter>
+

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- <!DOCTYPE webwork SYSTEM "../schema/dtd/webwork.dtd">
+-->
+<!-- Overall element for a Mathbook XML document; mandatory, always-->
+
+
+
+<chapter xml:id="Interest" xmlns:xi="http://www.w3.org/2001/XInclude"><title>Interest</title>
+
+			
+
+
+<section xml:id="SimpleInterest"><title>Simple Interest</title>
+
+<p>
+To determine the amount of interest one should pay for the use of someone else's money, one model is to base the amount of interest according to two conditions:
+<ul>
+<li>interest should be directly proportional to the length of time over which the money is lent</li>
+<li>interest should be directly proportional to some rate which is based upon the borrower's perceived ability to repay and based upon current market conditions.</li>
+</ul>
+Often, when dealing with monetary value over time one can more easily illustrate the setting using a time line
+<me>
+\begin{matrix}
+ \text{Money Amounts} &amp; P &amp;  \rightarrow &amp; A \\ 
+  \hline \\
+  \text{Time} &amp;  0  &amp; \rightarrow &amp;  t 
+\end{matrix}					
+</me>
+</p>
+
+<p>				
+To satisfy these constraints leads to the model for Simple Interest. 
+</p>
+
+<p>
+<theorem xml:id="SimpleInterestFormula"><title>Simple Interest Formula</title>
+<statement>Using simple interest, <m>I = P \cdot i \cdot t</m> and so <m>A = P + P \cdot i \cdot t</m> or <m>A = P(1 + i \cdot t)</m></statement>
+</theorem>
+</p>
+	
+<exercise><title>WeBWorK Interactive Exercise</title>
+	<webwork source="Library/Rochester/setAlgebra01RealNumbers/lhp1_31-34_mo.pg" />
+</exercise>
+	
+</section>
+			
+<section xml:id="CompoundInterest"><title>Regular Compound Interest</title>
+
+<p>
+When using simple interest, one only considers the value of the resource at the beginning of time and then again at the end. H
+owever, the lender does without use of the funds at all times during the period of the investment. Indeed, if the original investment
+were to only be lent for 1/2 of the original time period, then the borrower would have to pay the accrued interest at that time (1/2 as much
+as planned) and then perhaps re-borrow the money plus the paid interest for the remaining time. However, for the second half, the amount borrowed
+would include the additional interest that had to be paid.  Continuing this by shortening the period (say, 1/4's or 1/12's) would allow
+for the amount borrowed at the end of each period to grow. The net effect of this recalculation over many periods gives rise to what is 
+know as Compound Interest.</p>
+
+<theorem xml:id="CompoundInterestV"><title>Future Value of Compound Interest</title>
+<statement>
+	<p>Using Compound interest over t years, compounding m times per year, yields 
+	<m>\displaystyle A = P(1+r)^n</m> with <m>n=mt</m> and <m>r = i/m</m></p>
+</statement>
+<proof>
+	<p>To determine the future value of a deposit of size <m>P</m> over several 
+	periods, utilize the <xref ref="SimpleInterestFormula">simple interest formula</xref> for a single
+	period to determine the value of the deposit after that one period. Then, 
+	take that new (slightly larger) amount as a starting point
+	for a new simple interest calculation covering the next period. Repeat 
+	for n periods to get the ending value over all periods.</p>
+	<p>To do this, let's denote the present value after k periods as 
+	<m>P_k</m> and note that <m>P_0 = P</m>.</p>
+	<me>
+	\begin{matrix}
+	\text{Money Amounts} &amp; P_0 &amp; P_1 &amp; P_2 &amp; \ldots &amp; P_n \\ 
+  	\hline \\
+	\text{Time} &amp;  0  &amp; \frac{t}{n} &amp; \frac{2t}{n} &amp; \ldots &amp; t \\ 
+	\end{matrix}					
+	</me>
+	
+	<p>Then, using simple interest over each single time period</p>
+	<md>
+		<mrow>P_1 &amp; = P_0(1+r)</mrow>
+		<mrow>P_2 &amp; = P_1(1+r) = P_0(1+r)^2 </mrow>
+		<mrow>P_3 &amp; = P_2(1+r) = P_0(1+r)^3</mrow>
+		<mrow>P_4 &amp; = P_3(1+r) = P_0(1+r)^4</mrow>
+		<mrow> &amp; =  ...</mrow>
+		<mrow>P_{n-1} &amp; = P_{n-2}(1+r) = P_0(1+r)^{n-1}</mrow>
+		<mrow>P_n &amp; = P_{n-1}(1+r) = P_0(1+r)^n</mrow>
+	</md>
+	
+	<p>Noting that <m>A = P_n </m> and <m>P = P_0 </m> gives</p>
+	<md>
+		<mrow>A &amp; = P(1+r)^n</mrow>
+	</md>
+</proof>
+</theorem>
+				
+<corollary><title>Present Value of Compound Interest</title>
+<statement>Given a future value <m>A</m>, the present value using Compound Interest is given by <m>\displaystyle P = A(1+r)^{-n}</m></statement>
+<proof><p>Take the formula above and solve for P. This gives,</p>
+	<p><m>\displaystyle P = A(1+r)^{-n}</m></p>
+</proof>
+</corollary>
+				
+
+<definition xml:id="EffectiveInterestRate"><title>Effective Interest Rates</title>
+	<p>
+	The published yearly interest rate is also called the "nominal" rate.
+	As one considers investments (and especially annuities) one may desire compounding the value of money over different compounding time 
+	frames. So, comparing raw interest rates becomes muddled since the same nominal rate can result in wildly different actual growth amounts.
+	To avoid confusion we determine what is known as an effective interest rate
+	by computing the increase of <m>\$ 1</m> over one year's time span. This results in the effective rate <m>r_e</m>
+	<md>
+		<mrow>P + I = 1 + 1 \cdot r_e \cdot 1 = 1(1+r)^m</mrow>
+		<mrow>r_e = (1+r)^m - 1</mrow>
+	</md>
+	</p>
+</definition>
+
+<example><title>Comparing different compounding periods</title>
+	<p>Determine the effective rate of compounding daily that is equivalent to compounding monthly at an annual rate of <m>r_{12}=4%</m>.  
+	To do so, first compute the effective interest rate of the monthly compounding (since you know its stated rate) using 
+	<m> \displaystyle (1+ \frac{0.04}{12})^{12} - 1</m>.  Then, use the effective rate
+	formula set equal to this effective value and work your way backward to find the annual rate <m>r_{365}</m>for compounding daily.</p>
+	<md>
+		<mrow>(1+ \frac{0.04}{12})^{12} - 1 &amp; = (1+ \frac{r_{365}}{365})^{365} - 1 </mrow>
+		<mrow>(1+ \frac{0.04}{12})^{12} &amp; = (1+ \frac{r_{365}}{365})^{365} </mrow>
+		<mrow>\ln(1+ \frac{0.04}{12})^{12} &amp; = \ln(1+ \frac{r_{365}}{365})^{365} </mrow>
+		<mrow>12 \ln(1+ \frac{0.04}{12}) &amp; = 365 \ln(1+ \frac{r_{365}}{365}) </mrow>
+		<mrow>\frac{12}{365} \ln(1+ \frac{0.04}{12}) &amp; = \ln(1+ \frac{r_{365}}{365}) </mrow>
+		<mrow>e^{\frac{12}{365} \ln(1+ \frac{0.04}{12})} &amp; = 1+ \frac{r_{365}}{365} </mrow>
+		<mrow>365(e^{\frac{12}{365} \ln(1+ \frac{0.04}{12})} - 1) &amp; = r_{365} </mrow>
+	</md>
+	
+	<p>and the rest is arithmetic.  Easily, the above example generalizes to other compounding periods:</p>
+	<md>
+		<mrow>(1+ \frac{r_1}{m_1})^{m_1} - 1 &amp; = (1+ \frac{r_2}{m_2})^{m_2} - 1 </mrow>
+		<mrow>(1+ \frac{r_1}{m_1})^{m_1} &amp; = (1+ \frac{r_2}{m_2})^{m_2} </mrow>
+		<mrow>\ln(1+ \frac{r_1}{m_1})^{m_1} &amp; = \ln(1+ \frac{r_2}{m_2})^{m_2} </mrow>
+		<mrow>m_1 \ln(1+ \frac{r_1}{m_1}) &amp; = m_2 \ln(1+ \frac{r_2}{m_2}) </mrow>
+		<mrow>\frac{m_1}{m_2} \ln(1+ \frac{r_1}{m_1}) &amp; = \ln(1+ \frac{r_2}{m_2}) </mrow>
+		<mrow>e^{\frac{m_1}{m_2} \ln(1+ \frac{r_1}{m_1})} &amp; = 1+ \frac{r_2}{m_2} </mrow>
+		<mrow>m_2(e^{\frac{m_1}{m_2} \ln(1+ \frac{r_1}{m_1})} - 1) &amp; = r_2 </mrow>
+	</md>
+</example>
+
+</section>
+
+
+<section xml:id="ContinuousCompounting"><title>Continuous Compounding of Interest</title>
+
+<p>As interest is compounded more often, the effective interest rate tends to increase. Indeed, as m increases then the time between
+periods decreases and becomes infinitesimal.  We would then say that interest is compounded continuously. As it turns out, we will 
+see that there is a limit to the effective rate as m grows.</p>
+					
+<theorem xml:id="ContinuousCompoundingFV"><title>Future Value when Compounding Continuously</title>
+<statement><m>\displaystyle A = P e^{it}</m></statement>
+<proof>
+	<md>
+		<mrow>A &amp; = P \lim_{m \rightarrow \infty} (1+i/m)^{m t}</mrow>
+		<mrow>  &amp; = P \lim_{m \rightarrow \infty} \left ( (1+i/m)^m \right )^t</mrow>
+		<mrow>  &amp; = P \lim_{m \rightarrow \infty} \left ( e^{ \ln(1+i/m)^m} \right )^t</mrow>
+		<mrow>  &amp; = P \lim_{m \rightarrow \infty} \left ( e^{m \cdot \ln(1+i/m)} \right )^t</mrow>
+		<mrow>  &amp; = P \lim_{m \rightarrow \infty} \left ( e^{\frac{ \ln(1+i/m)}{1/m}} \right )^t</mrow>
+		<mrow>  &amp; = P \lim_{m \rightarrow \infty} \left ( e^{\frac{ \frac{-i/m^2}{(1+i/m)}}{-1/m^2}} \right )^t</mrow>
+		<mrow>  &amp; = P \lim_{m \rightarrow \infty} \left ( e^{ \frac{i}{(1+i/m)}} \right )^t</mrow>
+		<mrow>  &amp; = P \left ( e^{ \frac{i}{1+0}} \right )^t</mrow>
+		<mrow>  &amp; = P e^{i \cdot t}</mrow>
+	</md>
+</proof>
+</theorem>
+					
+<sage>
+<input>
+var('t')
+@interact
+def _(rate = slider(1,12,1),m = slider(2,1000,2),end_time=(1,20,1)):
+    
+    n = m*t
+    discrete_compounding = (1+rate/m)^n
+    continuous_compounding = e^(rate*t)
+    G = plot(discrete_compounding,t,0,end_time)
+    G += plot(continuous_compounding,t,0,end_time,color='green')
+    G.show(title='Discrete vs Continuous')
+    H = plot(continuous_compounding-discrete_compounding,t,0,end_time,color='red')
+    H.show(title='Difference between the two',figsize=(5,4))
+</input>
+</sage>
+
+
+</section>
+
+</chapter>		
+

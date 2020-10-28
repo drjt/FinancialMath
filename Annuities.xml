@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- <!DOCTYPE webwork SYSTEM "../schema/dtd/webwork.dtd">
+-->
+<!-- Overall element for a Mathbook XML document; mandatory, always-->
+
+
+
+<chapter xml:id="Annuities" xmlns:xi="http://www.w3.org/2001/XInclude"><title>Annuities</title>
+
+			
+<section xml:id="AnnuitiesIntroduction"><title>Introduction to Annuities</title>
+
+<p>In the discussion above, investments considered a single "deposit" at the beginning of the time period and a single "payout" at the 
+end of the time period. In many real-life situations, one may desire an option where there is perhaps a single deposit at the beginning of 
+time and then a series of (perhaps equal) payouts over the time period. Such a sequence of payments is called an annuity.</p>
+				
+<theorem><title>Annuity Future Value </title>
+	<statement>An annuity of R per period over t years, paying out m times per year with yearly rate i yields 
+	<m>\displaystyle A = R\frac{(1+r)^n-1}{r}</m></statement>
+	<proof>
+	<p>We will presume this sequence of regular and equal payments of amount R starts in 1 period from the beginning of time 
+	and then ends on the last day of the allotted time period.  To determine the future value of this accumulated promise, take
+	each payment and find its future value at the end of the time period.  Note that this means the first payment must be "moved forward"
+	n-1 time periods, the second n-2 time periods, etc. until the last payment which is actually at the final time and so is not moved
+	at all. This gives</p>
+	<md>
+		<mrow>A &amp; = R(1+r)^{n-1} + R(1+r)^{n-2} + R(1+r)^{n-3} +  ...  R(1+r)^{1} + R</mrow>
+		<mrow> &amp; = R \left [ (1+r)^{n-1} + (1+r)^{n-2} + (1+r)^{n-3} +  ...  (1+r)^{1} + 1 \right ]</mrow>
+		<mrow> &amp; = R \displaystyle \frac{1-(1+r)^n}{1-(1+r)} </mrow>
+		<mrow> &amp; = R \displaystyle \frac{(1+r)^n-1}{r} </mrow>
+	</md>
+	</proof>
+</theorem>
+				
+<corollary><title>Annuity Present Value </title>
+					<statement>An annuity of R per period over t years, paying out m times per year with yearly rate i yields 
+					<m>\displaystyle P = R\frac{1-(1+r)^{-n}}{r}</m></statement>
+					<proof>
+					<p>Apply the present value formula to the future value formula above.</p>
+					</proof>
+</corollary>
+				
+</section>
+
+<section><title>Annuity Basics</title>
+
+<title>Complete Amortization Schedule</title>
+<p>To determine the breakdown regarding interest paid and reduction of principle for any given payment in an annuity, one can
+simply apply a simple interest calculation covering one period to determine the interest and then the remainder of the payment
+will be applied to reducing the principle amount owed. Continuing this process for the life of the annuity (loan) give what is 
+known as an "amortization schedule". In general, since this involves payments in real money then we often round up the calculation
+of the regular payments so that the final payment will perhaps be slightly smaller than the others.</p>
+
+<sage>
+<input>
+def roundup(x):
+    return (ceil(100*x)/100).n()
+
+@interact(layout=dict(top=[['P', 'rate'],[ 'm', 't']]))
+def _(P = input_box(10000,label='Principle',width=12),
+                    m = input_box(12,label='Compounting Periods per year',width=4),
+                    t = input_box(2,label='Number of Years',width=4),
+                    rate = input_box(0.04,label='Yearly Interest Rate',width=6)):
+    n = m*t
+    r = rate/m
+    R1 = P*r/(1-(1+r)^(-n))
+    R = (ceil(100*R1)/100).n()
+    Bal = P    
+    Total_Interest = 0
+    Equity = 0
+    T = [["Payment","Starting","Interest Paid","Principle Red.","Equity"]]
+    pretty_print(html('Monthly Payment is \( \$ %.2f \)'%(R)))
+    for k in range(n-1):
+        Interest = round(Bal*r,2)
+        Total_Interest += Interest
+        Reduction = R - Interest
+        Equity += Reduction
+        T.append([k+1,"%7.2f"%(Bal),"%5.2f"%(Interest),"%7.2f"%(Reduction),"%7.2f"%(Equity)])
+        Bal = Bal - Reduction
+    Interest = roundup(Bal*r)
+    LastPmt = Bal+Interest
+    Equity += Bal
+    T.append([n,"%7.2f"%(Bal),"%5.2f"%(Interest),"%7.2f"%(Bal),"%7.2f"%(Equity)])
+    show(table(T, header_row=True, align='right', frame=True  ))
+
+    pretty_print("Final payment of = %7.2f"%(LastPmt))
+    pretty_print("Total Interest = %7.2f"%(Total_Interest))
+    
+    
+
+</input>
+</sage>
+</section>
+
+<section><title>Determining interest for any given payment</title>
+					<p>To determine the amount of interest in the kth payment, one can avoid having to compute the entire amortization schedule by 
+					computing the present value <m>P_{mid}</m> of the final n-k payments at the previous time period. This will be at the n-(k-1
+					Then, compute the interest demanded on that amount one time period later.  That is, <m>P_{mid} \cdot r </m>.</p>
+					<md>
+						<mrow>P_{mid} = R \frac{1-(1+r)^{-(n-(k+1))}}{r}</mrow>
+						<mrow>P_{mid} \cdot r = R (1-(1+r)^{k-n-1})</mrow>
+					</md>
+
+					<sage>
+						<input>
+def roundup(x):
+    return (ceil(100*x)/100).n()
+
+@interact(layout=dict(top=[['P', 'rate'],[ 'm', 't'],[' ','k']]))
+def _(P = input_box(10000,label='Principle',width=10),
+                    m = input_box(12,label='Compounting Periods per year',width=6),
+                    t = input_box(2,label='Number of Years',width=6),
+                    rate = input_box(0.04,label='Yearly Interest Rate',width=6),
+                    k = input_box(12,label='Payment Period',width=6)):
+    n = m*t
+    r = rate/m
+    R = roundup(P*r/(1-(1+r)^(-n)))
+    Bal = P    
+    pretty_print(html('Monthly Payment is $%.2f$.'%(R)))
+    PsubK = R*(1-(1+r)^(k-n-1))/r
+    Interest = PsubK*r
+    Reduction = R - Interest
+    pretty_print(html('At the $%s$th '%str(k)+'payment period, Balance = $%.2f$'%(PsubK)+' requires interest of $%.2f$'%(Interest)+' and principle reduction of $%.2f$'%(Reduction)))
+</input>
+</sage>
+
+</section>
+
+
+
+<section><title>Annual cost of living increases</title>
+<p>Generally, an annuity is a sequence of equal payments over time. In reality, people like to use an annuity to
+fund retirement and one might want to allow for the payments to increase each year to keep up with the cost of living.
+Another alternative occurs perhaps when one might purchase a house and not be able to make the necessary payments at the 
+beginning of the annuity but expects to earn more and therefore be able to pay more in later years of the loan. To analyze
+these situations takes a bit more care since the compounding period and the (annual) increases are not necessarily on the 
+same time frames.  To fix this, the idea is to convert the periodic payments in terms of years by converting, for example,
+the 12 monthly payments into a single but equivalent lump sum payment at the end of the year.  So long as the lump sum payment
+is mathematically equivalent to the sequence of payments then all is equivalent. Then, we can tack on the desired cost of living 
+increase to these annualized payments and use that rate of increase for the yearly annuity.</p>
+
+
+<theorem><title>Yearly Annuity with Cost of Living Adjustment</title>
+<statement>The Present Value of a yearly annuity initially in the amount of <m>R_y</m> which includes yearly cost-of-living adjustments is 
+	<m>R_y \frac{1}{1+r_e} \left [ \frac{ \left ( \frac{1+a}{1+r_e} \right )^t-1}{ \left (\frac{1+a}{1+r_e} \right )-1} \right]</m>
+	with <m>R_y</m> = first year's payment, 
+	<m>r_e</m> = effective yearly rate, a = yearly cost-of-living increase, t = number of years.</statement>
+	<proof>
+		<p>To save some time, let's define <m>z = \frac{1+a}{1+r_e}</m>.  Notice that if the cost of living increase (a) is greater than
+		the effective rate of interest <m>r_e</m> then the net investment will grow with a interest rate related to <m>z-1 \gt 0</m>.  
+		On the other hand, if the cost of living increase is less than the effective rate of interest, then the net investment wil grow at an interest
+		rate <m>z-1 \lt 0</m>...that it, your periodic payments will not be keeping up with inflation.  Notice in the formulas below that this 
+		quotient z essentially replaces the standard compound growth factor (1+r). </p>
+		<p>Starting with a payment of R at the end of the first
+		year, increase this by a factor of (1+a) for each subsequent year gives a present value of </p>
+		<md>
+		<mrow>P &amp; = R_y (1+r_e)^{-1} + R_y (1+a)(1+r_e)^{-2} + R_y (1+a)^{2}(1+r_e)^{-3}  + R_y (1+a)^{3}(1+r_e)^{-4} + ... + R_y (1+a)^{t-1}(1+r_e)^{-t}</mrow>
+		<mrow>&amp; = R_y \left [ (1+r_e)^{-1} + (1+a)(1+r_e)^{-2} + (1+a)^{2}(1+r_e)^{-3} + (1+a)^{3}(1+r_e)^{-4} + ... + (1+a)^{t-1}(1+r_e)^{-t} \right ]</mrow>
+		<mrow>&amp; = R_y \frac{1}{1+r_e} \left [ 1 + z + z^2 + z^3 + ... +  z^{t-1} \right ]</mrow>
+		<mrow>&amp; = R_y \frac{1}{1+r_e} \left [ \frac{1-z^t}{1-z} \right] </mrow>
+		<mrow>&amp; = R_y \frac{1}{1+r_e} \left [ \frac{z^t-1}{z-1} \right] </mrow>
+		</md>							
+	</proof>
+</theorem>
+					
+<p>Obviously, one may want to receive these payments more often than once a year but account for yearly adjustments to the payments.
+In this situation, one should determine the size R of the m payments in the first year and then find the accumulated value of those 
+payments at the end of one year. Taking that value as R in the theorem above gives the present value of the cost-of-living adjusted
+annuity stream. Of course one can take that present value and determine the value of the income stream at any other desired time.</p>
+
+<example><title>Yearly Annuity with Cost of Living Increase</title>
+<p>Let's consider the value of making payments of <m>\$ 10</m>  per year in year one and then increasing the payments by a rate of
+a = 4% each year.  Assuming an interest rate of <m>r_e</m> = 3% compounded yearly for t = 8 years, what is the present value of this annuity?</p>
+<md>
+	<mrow>z = \frac{1.04}{1.03} \approx 1.0097</mrow>
+	<mrow>P &amp; \approx \$ 10 \frac{1}{1.03} \left [ \frac{1.0097^8-1}{0.0097} \right]</mrow>
+	<mrow> &amp; = \$ 10 \frac{1}{1.03} 8.2769334 = \$ 80.36 </mrow>
+</md>
+</example>
+					
+<example><title>Monthly Annuity with Annual Cost of Living Increase</title>
+<p>To allow for more frequent payments, say monthly, but with yearly adjustments to the amount of these payments one can determine
+the future value of the initial payments over one year.  Then, use that value as a "yearly" payment adjusted for cost-of-living increase.</p>
+
+<p>Consider the following:  Initial monthly payments of <m>\$ 10</m> per month with interest compounded at 3% and with 4% yearly 
+cost-of-living adjustments for 8 years. First, compute the future value <m>R_y</m> of a year of payments and then apply the theorem above.</p>
+<md>
+	<mrow>r_e = \left ( 1 + \frac{0.03}{12} \right )^{12}-1 \approx 0.0304159</mrow>
+	<mrow>R_y = \$ 10 \frac{(1 + \frac{0.03}{12})^{12}-1}{\frac{0.03}{12}} = 121.66</mrow>
+	<mrow>z = \frac{1.04}{1.0304159} \approx 1.00930119576 </mrow>
+	<mrow>P = \$ 121.66 \frac{1}{1.0304159} \left [ \frac{1.00930119576^8-1}{0.00930119576} \right] = \$ 975.88</mrow>
+</md>
+</example>
+					
+<p>The interactive cell below determines the effect of compounding and cost of living increases for each payment of an annuity.</p>
+<sage>
+<input>
+def round(x):
+    return (floor(100*(x+0.005))/100).n()
+    
+@interact(layout=dict(top=[['R', 'rate'],['m','t'],['a']]))
+def _(R = input_box(10,label='Yearly Payment',width=10),
+           rate = input_box(0.03,label='Nominal Rate',width=6), 
+           m = input_box(1,label='Periods per Year',width=4), 
+           t = input_box(8,label='Years',width=4), 
+           a = input_box(0.04,label='Cost-of-Living Adjustment',width=6) ):
+    r = rate/m
+    n = m*t
+    A = 0
+    for k in range(t):
+        R1 = round(R*(1+a)^(k))
+        print "Year ",k+1," has payment(s) of ", R1
+        yearend = k*m
+        print "yearend ",yearend
+        for j in range(m):
+            tempBeg = R1*(1+r)^(-(yearend+j+1))
+            tempEnd = R1*(1+r)^(n-yearend-j-1)
+            A += tempEnd
+            print "  ",j+1,"th payment is worth at the start of time ",tempBeg
+            print "  ",j+1,"th payment is worth at the end of time ",tempEnd
+    P = A*(1+r)^(-n)
+    print "Total value of payments at the start of time is ",P
+    print "Total value of payments at the end of time is ",A
+</input>
+</sage>
+
+</section>
+
+<section><title>Sinking Funds</title>
+				<p>Some times you may have a debt to pay off but want to regularly put aside money in an interest bearing account so that it 
+				will accrue in time to some desired amount in the future and then used to pay off the debt. Such an instrument is known as a
+				“sinking fund”.  Generally, one can determine values for a sinking fund using the regular annuity formulas. However, sometimes
+				one may use a sinking fund to pay off an existing debt by hoping that one can earn perhaps a better return on the sinking fund
+				relative to the costs of the actual annuity.</p>
+				<example><title>Sinking Fund</title>
+				<p>Suppose have borrowed <m>\$ 1000</m> at 10% interest payable yearly for the next 5 years.  Normally, you would determine a yearly 
+				payment for this annuity to be</p>
+				<me>1000 = R \frac{1-1.1^{-10}}{0.1}</me>
+				<p>which yields a yearly payment of <m>\$ 162.75</m>.  Instead, to keep the loan current you pay only the interest each year and 
+				invest the remainder in your sinking fund. For the fun of it, let’s suppose we are able to invest this remainder at a rate of 11%.
+				Then, each year the balance owed remains the original <m> \$ 1000 </m> by paying  interest of <m>\$ 100</m> and investing
+				<m>$62.75</m> in the sinking fund. Over the 10 years, the sinking fund grows like a regular annuity but at the 11% rate.  By year 10
+				this fund grows to</p>
+				<me>62.75 \frac{1.11^{10}-1}{0.11} = \$ 1049.31</me>
+				<p>At the end of 10 years, we can then completely pay off the original loan and the remainder (<m>\$ 49.31</m>) is ours to keep
+				for all of our troubles.</p>
+				</example>
+
+<sage><title>Sinking Fund</title>
+<input>
+def roundup(x):
+    return (ceil(100*x)/100).n()
+
+@interact(layout=dict(top=[['P', 'm', 't'],[ 'rate1','rate2', ' ']]))
+def _(P = input_box(10000,label='Principle',width=10),
+                    m = input_box(12,label='Compounting Periods per year',width=6),
+                    t = input_box(2,label='Number of Years',width=6),
+                    rate1 = input_box(0.04,label='Yearly Interest Rate (Loan)',width=6),
+                    rate2 = input_box(0.04,label='Yearly Interest Rate (Sink)',width=6)):
+    n = m*t
+    r1 = rate1/m
+    r2 = rate2/m
+    R = roundup(P*r1/(1-(1+r1)^(-n)))
+    I = P*r1
+    pretty_print(html('Periodic Payment for loan annuity = $%.2f$.'%(R)))
+    pretty_print(html('Periodic Interest for loan annuity = $%.2f$.'%(I)))
+    S = R-I
+    pretty_print(html('Periodic Remainder for investing in sinking fund = $%.2f$.'%(S)))
+    
+    A = S*((1+r2)^n-1)/r2
+    pretty_print(html('Ending value of the sinking fund = $%.2f$.'%(A)))
+    pretty_print(html('Amount left after paying off original loan using sinking fund = $%.2f$.'%(A-P)))				
+				
+</input>
+</sage>
+</section>
+
+<section><title>Perpetual Annuities</title>
+<p>In general, an annuity is a regular set of payments over a set period of time. However, sometimes you might want to set up an investment
+which will return a set of regular payments forever. This is called a "perpetuity" or a "perpetual annuity". To determine the amount to invest
+to set up such an instrument, it is best to consider the present value at the beginning of time and require that the investment grow over only
+one time period to the amount which needs to be dispersed.  That is, after one period the investment grows by the amount of the desired payment:</p>
+				<md>
+					<mrow> A &amp; = P + R = P(1+r)</mrow>
+					<mrow> R &amp; = P(1+r) - P</mrow>
+					<mrow> &amp; = Pr</mrow>
+				</md>
+<p>If you want to consider money compounded more often than the payment period (say yearly payments but investments compounded m times per year</p>
+				<md>
+					<mrow> A &amp; = P + R = P(1+r)^m</mrow>
+					<mrow> R &amp; = P(1+r)^m - P</mrow>
+					<mrow> &amp; = P((1+r)^m - 1)</mrow>
+				</md>
+				<p>So, if you want to have a set of regular payments of <m>\$ R</m>  each year, then set aside an investment of 
+				<m>\displaystyle P = \frac{R}{(1+r)^m - 1}</m></p>
+
+</section>
+                
+
+</chapter>
+
